@@ -1,6 +1,7 @@
 package com.company.hr.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -44,5 +45,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepository
                 .findByNameContainingIgnoreCaseOrEmailContainingIgnoreCaseOrDepartmentContainingIgnoreCase(
                         keyword, keyword, keyword);
+    }
+
+    @Override
+    public List<String> getEmployeeNameSuggestions(String term) {
+        List<Employee> employees = employeeRepository.findByNameStartingWithIgnoreCase(term);
+        return employees.stream()
+                .map(Employee::getName)
+                .collect(Collectors.toList());
     }
 }
