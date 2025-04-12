@@ -111,5 +111,11 @@ public class EmployeeController {
         employeeService.deleteEmployee(id);
         return "redirect:/employees";
     }
-    
+
+    // 🔍 Search suggestion endpoint
+    @GetMapping("/suggestions")
+    @ResponseBody
+    public List<String> suggestEmployeeNames(@RequestParam("term") String term) {
+        return employeeService.getEmployeeNameSuggestions(term);
+    }
 }
